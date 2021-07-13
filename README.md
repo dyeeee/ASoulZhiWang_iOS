@@ -14,16 +14,14 @@ A-SOUL是乐华娱乐于2020年11月23日公开的其旗下首个虚拟偶像团
 
 在未来学院中，五位性格迥异的少女，为了成为偶像这一共同目标走到一起，并且为之努力奋斗。
 
-## 下载 🐭
-暂未发布
-
-
 ## 截图 🤤
 <div align=center>
-<img src="https://github.com/dyeeee/MyGraduationProjectV2_Pod/blob/main/ScreenShots/dict-1.JPEG" width="240"/>
-<img src="https://github.com/dyeeee/MyGraduationProjectV2_Pod/blob/main/ScreenShots/dict-2.JPEG" width="240"/>
+<img src="https://github.com/dyeeee/ASoulZhiWang_iOS/blob/main/ASoulZhiWang_iOS/ScreenShots/main.png" width="240"/>
+<img src="https://github.com/dyeeee/ASoulZhiWang_iOS/blob/main/ASoulZhiWang_iOS/ScreenShots/detai.png" width="240"/>
 </div>
 
 ## 待解决的显著BUG
 首次查询后，.sheet跳出的数据为测试数据。可能是因为视图在初始化的时候已经加载了，在获取网络数据后没有正确更新。
 
+## 下载 🐭
+暂未发布
