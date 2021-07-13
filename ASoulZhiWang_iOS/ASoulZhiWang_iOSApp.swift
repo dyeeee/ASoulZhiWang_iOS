@@ -13,7 +13,7 @@ struct ASoulZhiWang_iOSApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeTabView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
