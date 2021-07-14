@@ -14,6 +14,11 @@ struct DetailView: View {
     
     @StateObject var responseVM = CheckResultViewModel()
 
+    func removeFirstBlank(s:String) -> String {
+        var mys = s
+        mys.removeFirst()
+        return String(mys)
+    }
     
     var body: some View {
         NavigationView {
@@ -27,13 +32,36 @@ struct DetailView: View {
                     if(responseVM.relatedList.isEmpty){
                         ProgressView()
                     }else{
-                        VStack(alignment:.leading) {
-                            Text("检测时间: \(currentDateString())")
-                            Text("总文字复制占比：\(String(format: "%.2f",responseVM.totalRate) )%")
-                        }.font(.subheadline)
+                        HStack {
+                            VStack(alignment:.leading) {
+                                Text("检测时间: \(currentDateString())")
+                                Text("总文字复制占比：\(String(format: "%.2f",responseVM.totalRate) )%")
+                            }.font(.subheadline)
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                let tmpDetailModel = responseVM.relatedList[0].array[1] as! detailModel
+                                
+                                
+                                        UIPasteboard.general.string = """
+                                            枝网文本复制检测报告(简洁)
+                                            查重时间: \(currentDateString())
+                                            总文字复制比: \(String(format: "%.2f",responseVM.totalRate) )%
+                                            相似小作文:
+                                             \(responseVM.relatedList[0].array[2] as! String)
+                                            作者: \(tmpDetailModel.m_name)
+                                            发表时间: \(timeStampToString(timeStamp: tmpDetailModel.ctime))
+                                            
+                                            查重结果仅作参考，请注意辨别是否为原创
+                                            """
+                                    }) {
+                                        Image(systemName: "doc.on.doc")
+                            }.buttonStyle(PlainButtonStyle())
+                            .foregroundColor(Color(.systemBlue))
+                        }
                     }
                 }
-                
                 
             Section(header:Text("相似文章")){
                 if(responseVM.relatedList.isEmpty){
@@ -44,7 +72,12 @@ struct DetailView: View {
                     
                     let singleDetail = relatedItem.array[1] as! detailModel
                     let singleRate = relatedItem.array[0] as! Float
-                    let singleLink = relatedItem.array[2] as! String
+                    let singleLink_tmp = relatedItem.array[2] as! String
+                    
+                    let singleLink = removeFirstBlank(s: singleLink_tmp)
+                    
+                    
+                    let testLink = decodedResult.responseData.related[0].array[2]  as! String
                     
                     let content = singleDetail.content
                     
@@ -71,7 +104,10 @@ struct DetailView: View {
                         HStack {
                             Text("相似率: \(String(format: "%.2f",singleRate) )%")
                             Spacer()
-                            Text("查看原文")
+                            
+                            Link("查看原文", destination: (URL(string: "\(singleLink)") ?? URL(string: "\(testLink)"))!)
+                                .foregroundColor(Color(.systemBlue))
+                                .buttonStyle(PlainButtonStyle())
                         }.font(.subheadline)
                         .foregroundColor(Color(.systemGray2))
                     }

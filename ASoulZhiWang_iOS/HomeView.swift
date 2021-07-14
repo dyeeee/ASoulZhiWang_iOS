@@ -83,25 +83,63 @@ struct HomeView: View {
 
                 
                 VStack(alignment: .leading){
-                    Text("查重API: https://github.com/stream2000/ASoulCnki")
-                    Text("Andorid端: https://github.com/jiangdashao/ASoulZhiWang")
+                    HStack {
+                        Text("查重API:")
+                        Link("https://github.com/stream2000/ASoulCnki", destination: URL(string: "https://github.com/stream2000/ASoulCnki")!)
+                            .foregroundColor(Color(.systemBlue))
+                    }
+                    HStack {
+                        Text("Andorid端:")
+                        Link("https://github.com/jiangdashao/ASoulZhiWang", destination: URL(string: "https://github.com/jiangdashao/ASoulZhiWang")!)
+                            .foregroundColor(Color(.systemBlue))
+                    }
+                    
                 }.font(.caption)
+                
+                
+                
                 
                 Divider()
                 Text("A-SOUL简介 🥵")
                 VStack(){
                     
-                    Text("""
-A-SOUL是乐华娱乐于2020年11月23日公开的其旗下首个虚拟偶像团体，由5名成员组成。\n
-* A-SOUL主页链接：https://space.bilibili.com/703007996\n
-* 珈乐：https://space.bilibili.com/351609538\n
-* 乃琳：https://space.bilibili.com/672342685\n
-* 贝拉：https://space.bilibili.com/672353429\n
-* 向晚：https://space.bilibili.com/672346917\n
-* 嘉然：https://space.bilibili.com/672328094\n
-在未来学院中，五位性格迥异的少女，为了成为偶像这一共同目标走到一起，并且为之努力奋斗。
-""")
-                }.font(.caption)
+                    Text("A-SOUL是乐华娱乐于2020年11月23日公开的其旗下首个虚拟偶像团体，由5名成员组成。")
+                    VStack(alignment:.leading){
+                    HStack {
+                        Text("A-SOUL主页链接")
+                        Link("https://space.bilibili.com/703007996", destination: URL(string: "https://space.bilibili.com/703007996")!)
+                            .foregroundColor(Color(.systemBlue))
+                    }
+                    HStack {
+                        Text("* 珈乐")
+                        Link("https://space.bilibili.com/703007996", destination: URL(string: "https://space.bilibili.com/703007996")!)
+                            .foregroundColor(Color(.systemBlue))
+                    }
+                    HStack {
+                        Text("* 乃琳")
+                        Link("https://space.bilibili.com/672342685", destination: URL(string: "https://space.bilibili.com/672342685")!)
+                            .foregroundColor(Color(.systemBlue))
+                    }
+                    HStack {
+                        Text("* 贝拉")
+                        Link("https://space.bilibili.com/672342685", destination: URL(string: "https://space.bilibili.com/672342685")!)
+                            .foregroundColor(Color(.systemBlue))
+                    }
+                    HStack {
+                        Text("* 向晚")
+                        Link("https://space.bilibili.com/672346917", destination: URL(string: "https://space.bilibili.com/672346917")!)
+                            .foregroundColor(Color(.systemBlue))
+                    }
+                    HStack {
+                        Text("* 嘉然")
+                        Link("https://space.bilibili.com/672328094", destination: URL(string: "https://space.bilibili.com/672328094")!)
+                            .foregroundColor(Color(.systemBlue))
+                    }
+                    }.font(.callout)
+                    .padding([.top,.bottom], 5)
+                    Text("在未来学院中，五位性格迥异的少女，为了成为偶像这一共同目标走到一起，并且为之努力奋斗。")
+
+                }
                 .padding(.all, 20)
                 
                 

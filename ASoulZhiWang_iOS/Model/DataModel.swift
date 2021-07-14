@@ -100,3 +100,13 @@ let jsonString = """
 let data = Data(jsonString.utf8)
 let decoder = JSONDecoder()
 let decodedResult = try! decoder.decode(CheckResponse.self, from: data)
+
+//枝网文本复制检测报告(简洁)
+//查重时间:2021-07-14 14:31:41
+//总文字复制比:90.91%
+//相似小作文:
+// https://t.bilibili.com/461982440594229453/#reply3750195753
+//作者:骡旋突进黑島丶
+//发表时间:2020-11-26 23:31:08
+//
+//查重结果仅作参考，请注意辨别是否为原创

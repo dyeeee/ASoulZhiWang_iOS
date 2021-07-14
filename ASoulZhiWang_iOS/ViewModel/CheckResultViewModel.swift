@@ -50,6 +50,7 @@ class CheckResultViewModel: ObservableObject {
                     self.responseForView = decodedResponse
                     self.totalRate = self.responseForView.responseData.rate
                     self.relatedList = self.responseForView.responseData.related
+                        
                     }
                  }
               } catch let jsonError as NSError {
