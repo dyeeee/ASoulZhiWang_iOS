@@ -8,56 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-    
-    
-    
-    func run_API(){
-
-        // prepare json data
-        let inputText: [String: Any] = ["text": "\(inputText)"]
-
-        let sendData = try? JSONSerialization.data(withJSONObject: inputText)
-
-        // create post request
-        let url = URL(string: "https://asoulcnki.asia/v1/api/check")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        // insert json data to the request
-        request.httpBody = sendData
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            
-            
-            if let data = data {
-              do {
-                let decoder = JSONDecoder()
-                let decodedResponse = try decoder.decode(CheckResponse.self, from: data)
-                self.responseForView = decodedResponse
-                self.showSheet = true
-//                DispatchQueue.main.async {
-//                    self.response = decodedResponse
-//                    self.testTag = true
-//                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5){
-//
-//                        self.showSheet = true
-//
-//                    }
-//                 }
-              } catch let jsonError as NSError {
-                print("JSON decode failed: \(jsonError.localizedDescription)")
-              }
-              return
-            }
-        }
-
-        task.resume()
-    }
-    
     @State var inputText:String = "输入查重的小作文，不少于10个字o"
     @State var alert:Bool = false
     @State var showSheet = false
-    @State var responseForView:CheckResponse
     
     
     var body: some View {
@@ -91,10 +44,12 @@ struct HomeView: View {
                         
                         if (inputText.count < 10 ) {
                             self.alert = true
+                        }else{
+                            self.showSheet = true
                         }
-                        run_API()
+                        //run_API()
                        
-                        //self.showSheet = true
+                        
                         
                     }, label: {
                         ZStack {
@@ -154,7 +109,7 @@ A-SOUL是乐华娱乐于2020年11月23日公开的其旗下首个虚拟偶像团
             }
             
             .sheet(isPresented: $showSheet, content: {
-                DetailView(reponse: responseForView, source: inputText)
+                DetailView(inputText: $inputText)
             })
             .alert(isPresented: $alert) {
                 Alert(title: Text("字数太少惹"), dismissButton: .default(Text("知道了捏")))
@@ -166,6 +121,6 @@ A-SOUL是乐华娱乐于2020年11月23日公开的其旗下首个虚拟偶像团
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(responseForView: decodedResult)
+        HomeView()
     }
 }

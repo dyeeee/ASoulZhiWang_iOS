@@ -9,23 +9,37 @@ import SwiftUI
 
 struct DetailView: View {
     
-    @State var reponse:CheckResponse
-    @State var source = ""
+    @Binding var inputText:String
+    @State var showResult = false
+    
+    @StateObject var responseVM = CheckResultViewModel()
+
     
     var body: some View {
         NavigationView {
             List {
                 Section(header:Text("输入内容")){
-                Text("\(source)")
+                    Text("\(inputText)")
                 }
                 
                 
                 Section(header:Text("查重结果")){
-                Text("总文字复制占比：\(String(format: "%.2f",reponse.responseData.rate) )%")
+                    if(responseVM.relatedList.isEmpty){
+                        ProgressView()
+                    }else{
+                        VStack(alignment:.leading) {
+                            Text("检测时间: \(currentDateString())")
+                            Text("总文字复制占比：\(String(format: "%.2f",responseVM.totalRate) )%")
+                        }.font(.subheadline)
+                    }
                 }
                 
+                
             Section(header:Text("相似文章")){
-                ForEach(reponse.responseData.related) {
+                if(responseVM.relatedList.isEmpty){
+                    ProgressView()
+                }else{
+                ForEach(responseVM.relatedList) {
                     relatedItem in
                     
                     let singleDetail = relatedItem.array[1] as! detailModel
@@ -37,7 +51,11 @@ struct DetailView: View {
                     VStack(alignment:.leading){
                         
                         HStack{
-                            Text("id: \(singleDetail.m_name)")
+                            VStack(alignment:.leading) {
+                                Text("id: \(singleDetail.m_name)")
+                                Text("发表时间: \(timeStampToString(timeStamp: singleDetail.ctime))")
+                            }
+                            
                             Spacer()
                             Image(systemName: "hand.thumbsup.fill")
                             Text("\(singleDetail.like_num)")
@@ -47,8 +65,8 @@ struct DetailView: View {
                         VStack(alignment:.leading){
                             Text("\(content)")
                                 
-                        }.padding([.top
-                                   ,.bottom], 1)
+                        }.font(.subheadline)
+                        .padding([.top,.bottom], 1)
                         
                         HStack {
                             Text("相似率: \(String(format: "%.2f",singleRate) )%")
@@ -60,12 +78,23 @@ struct DetailView: View {
                     
                    
                     
-                }.zIndex(3)
+                }
+                .redacted(
+                    reason: responseVM.isLoading ? .placeholder : []
+                  )
                 
                 }
+                }
+                
+                
+                
             }.listStyle(InsetGroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarTitle("文本复制检测报告结果(枝网)")
+            .onAppear(perform: {
+                responseVM.run_API(inputText: inputText)
+                
+            })
         }
     }
 }
@@ -123,8 +152,11 @@ struct DetailView_Previews: PreviewProvider {
         let decoder = JSONDecoder()
         let decodedResult = try! decoder.decode(CheckResponse.self, from: data)
        
+        let testVM = CheckResultViewModel()
+        testVM.relatedList = decodedResult.responseData.related
         
+        testVM.isLoading = false
         
-        return DetailView(reponse: decodedResult)
+        return DetailView(inputText: .constant("我好想做贝拉小姐的沙包啊"),responseVM:testVM)
     }
 }

@@ -14,7 +14,6 @@ struct CheckResponse: Decodable {
         case responseData = "data"
     }
     
-    
     var code:Int
     var message:String
     var responseData:ResponseData
@@ -67,7 +66,7 @@ let jsonString = """
                          [
                             1.0,
                             {
-                                "content": "如果看到测试内容，说明这是APP启动后首次查询的bug，请重新点击立即查询",
+                                "content": "测试内容1",
                                 "ctime": 1606452746,
                                 "like_num": 3,
                                 "m_name": "测试用户1",
@@ -81,7 +80,7 @@ let jsonString = """
                         [
                             1.0,
                             {
-                                "content": "如果看到测试内容，说明这是APP启动后首次查询的bug，请重新点击立即查询",
+                                "content": "测试内容2",
                                 "ctime": 1606647729,
                                 "like_num": 0,
                                 "m_name": "测试用户2",

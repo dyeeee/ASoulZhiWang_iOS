@@ -13,7 +13,7 @@ struct HomeTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab){
-            HomeView(responseForView: decodedResult)
+            HomeView()
                 .tabItem {
                     Image(systemName: "a.square")
                     Text("Main")
